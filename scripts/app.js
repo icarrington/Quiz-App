@@ -14,7 +14,7 @@ const answers = document.querySelectorAll('.answer');
 const answerBox = document.querySelector('.answers');
 const nextButton = document.getElementById('next');
 const questionContainer = document.querySelector('.question-container');
-const result = document.querySelector('.result');
+
 
 
 function random(min, max) {
