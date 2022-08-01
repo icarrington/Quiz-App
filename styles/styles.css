@@ -13,16 +13,34 @@ main {
   font-size: 40px;  
 }
 
+.answer {
+  border: 1px solid black;
+  border-radius: 15px;
+  margin:1%;
+  padding:20px 175px 20px 10px;
+}
 .question-container {
   border: 5px solid rgb(0, 0, 0);
   border-radius: 20px;
-  width: 480px;
+  width: 450px;
   height: 450px;
   padding: 25px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
 
+@media screen and (max-width: 425px) {
+  .question-container {
+    width: 320px;
+  }
+  .answer {
+    padding: 20px 100px 20px 10px;
+  }
+
+  main {
+    padding-top: 25px;
+  }
 }
 
 
@@ -58,12 +76,6 @@ main {
   height: 25%;
 }
 
-.answer {
-  border: 1px solid black;
-  border-radius: 15px;
-  margin:1%;
-  padding:20px 175px 20px 10px;
-}
 
 .answer:hover {
   background-color: rgb(108, 151, 216);
