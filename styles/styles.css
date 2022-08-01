@@ -90,13 +90,13 @@ main {
   transition: all 0.5s;
 }
 
-.result.correct {
+.correct {
   background-color: #57f50d;
   opacity: 1;
   transition: all 0.5s;
 }
 
-.result.incorrect {
+.incorrect {
   background-color: #ff1010;
   opacity: 1;
   transition: all 0.5s;

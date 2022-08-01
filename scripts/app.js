@@ -32,7 +32,7 @@ function populateAnswers(correct) {
     let i = choices.length; //contains current index of choices
 
 
-    if(i == correctIndex) {choices.push(correct)}
+    if(i === correctIndex) {choices.push(correct)}
     else if(!choices.includes(wrongFruit.name)) {choices.push(wrongFruit.name)}
   }
 
@@ -46,7 +46,6 @@ function generateQuestion() {
   //get a random fruit to put into the image
   let index = random(0, fruits.length - 1)
   let fruit = fruits[index];
-  console.log(index, fruit);
 
   if(previousAnswers.has(fruit.name)) {generateQuestion()}
   else{
@@ -61,34 +60,30 @@ function generateQuestion() {
 }
 
 function goNext() {
-  
-  if(selectedAnswer == correctAnswer) {handleCorrect()}
-  else {handleIncorrect()}
-
-  
   if(questionNumber == totalQuestions) {
     questionContainer.innerHTML = `You got ${rightAnswers} / ${totalQuestions} answers right.<button id="again">Play Again </button>`;
     again.onclick = function(event) {location.reload()};
   };
 
-  setTimeout(() => {
-    result.classList.remove('correct');
-    result.classList.remove('incorrect');
-  }, 600);
   questionNumber++;
   number.innerHTML = `${questionNumber}/${totalQuestions}`;
   generateQuestion();
 }
 
-function handleCorrect() {
-  result.classList.add('correct');
-  result.innerHTML = 'Correct';
-  rightAnswers++;
-}
+async function highlightCorrectAnswer() {
+  for(let i = 0; i < answers.length; i++) {
+    if (answers[i].textContent === correctAnswer) {
+      answers[i].classList.add('correct');
+    } else {
+      answers[i].classList.add('incorrect');
+    }
+  }
 
-function handleIncorrect() {
-  result.classList.add('incorrect');
-  result.innerHTML = 'Incorrect';
+  await new Promise((resolve) => setTimeout(resolve, 1250)); 
+  answers.forEach(answer => {
+    answer.classList.remove('correct');
+    answer.classList.remove('incorrect');
+    });
 }
 
 generateQuestion();
@@ -103,7 +98,7 @@ question.innerHTML = 'What fruit is this?';
 img.addEventListener('mousedown', (e) => e.preventDefault());
 img.addEventListener('contextmenu', (e) => e.preventDefault());
 
-answerBox.addEventListener('click', function(event) {
+function handleClick(event) {
   let target = event.target;
   if(target.className != 'answer') return;
 
@@ -112,9 +107,15 @@ answerBox.addEventListener('click', function(event) {
   target.classList.add('selected');
   
   selectedAnswer = target.textContent;
-  
-});
+}
 
-nextButton.addEventListener('click', (() => {
+answerBox.addEventListener('click', handleClick);
+
+async function handleSubmit() {
   answers.forEach(answer => answer.classList.remove('selected'));
-  goNext()}));
+  await highlightCorrectAnswer();
+  if(selectedAnswer === correctAnswer) rightAnswers++;
+  goNext()
+}
+
+nextButton.addEventListener('click', handleSubmit);
