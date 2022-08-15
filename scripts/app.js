@@ -23,11 +23,11 @@ function random(min, max) {
 
 function populateAnswers(correct) {
   let choices = [];
-  const correctIndex = random(0,3);
+  const correctIndex = random(0,3); //random index to put the correct answer in the choices
   let wrongAnswers = fruits.filter(value => value.name != correct); //Array of wrong answers
 
 
-  while (choices.length < 4) {
+  while (choices.length < 4) { // create 4 random choices with the correct answer included in a random position
     let wrongFruit = wrongAnswers[random(0, wrongAnswers.length - 1)]; // get a random fruit from wrong answers to fill the choices
     let i = choices.length; //contains current index of choices
 
@@ -47,7 +47,7 @@ function generateQuestion() {
   let index = random(0, fruits.length - 1)
   let fruit = fruits[index];
 
-  if(previousAnswers.has(fruit.name)) {generateQuestion()}
+  if(previousAnswers.has(fruit.name)) {generateQuestion()} //does not use the same fruit twice
   else{
     img.src = `images/${fruit.src}`;
     previousAnswers.add(fruit.name);
@@ -79,7 +79,7 @@ async function highlightCorrectAnswer() {
     }
   }
 
-  await new Promise((resolve) => setTimeout(resolve, 1250)); 
+  await new Promise((resolve) => setTimeout(resolve, 1250)); //highlight answers for 1.25 seconds before removing highlights
   answers.forEach(answer => {
     answer.classList.remove('correct');
     answer.classList.remove('incorrect');
